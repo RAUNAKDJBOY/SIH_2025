@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia Authenticity Validator - Institutions</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #2d8bff, #5aa9ff);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.08);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(6px);
+    }
+    .logo {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    .nav-item {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #fff;
+      text-decoration: none;
+      display: block;
+    }
+    .nav-item.active, .nav-item:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .main {
+      flex: 1;
+      background: #f9fbff;
+      color: #222;
+      border-radius: 20px 0 0 20px;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+    h1 { margin-top: 0; }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      color: #333;
+    }
+    label { display:block; margin:8px 0 4px; font-size:14px; color:#444; }
+    input, select {
+      width:100%; padding:10px;
+      border-radius:8px; border:1px solid #ccd5e0;
+      margin-bottom:12px; font-size:14px;
+    }
+    .btn {
+      background: #2d8bff;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+    .btn:hover { background: #1d6fe0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+    table th {
+      background: #f0f4fa;
+      color: #333;
+    }
+    table tr:nth-child(even) {
+      background: #f9fbff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Academia Validator</div>
+    <a href="dashboard.html" class="nav-item">Dashboard</a>
+    <a href="verify.html" class="nav-item">Verify Certificate</a>
+    <a href="institutions.html" class="nav-item active">Institutions</a>
+    <a href="reports.html" class="nav-item">Reports</a>
+    <a href="settings.html" class="nav-item">Settings</a>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <h1>🏫 Institutions</h1>
+
+    <!-- Add Institution -->
+    <div class="card">
+      <h2>Add Institution</h2>
+      <form id="instForm" onsubmit="addInstitution(event)">
+        <label for="instName">Institution Name</label>
+        <input id="instName" required placeholder="e.g. Ranchi University">
+
+        <label for="instType">Type</label>
+        <select id="instType">
+          <option>University</option>
+          <option>College</option>
+          <option>School</option>
+          <option>Training Institute</option>
+        </select>
+
+        <label for="instCode">Code</label>
+        <input id="instCode" required placeholder="e.g. RU123">
+
+        <button class="btn" type="submit">Add Institution</button>
+      </form>
+    </div>
+
+    <!-- Institution List -->
+    <div class="card">
+      <h2>Registered Institutions</h2>
+      <table id="instTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Code</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ranchi University</td>
+            <td>University</td>
+            <td>RU123</td>
+            <td><button class="btn" onclick="removeRow(this)">Remove</button></td>
+          </tr>
+          <tr>
+            <td>BIT Mesra</td>
+            <td>College</td>
+            <td>BIT456</td>
+            <td><button class="btn" onclick="removeRow(this)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function addInstitution(e) {
+      e.preventDefault();
+      const name = document.getElementById('instName').value.trim();
+      const type = document.getElementById('instType').value;
+      const code = document.getElementById('instCode').value.trim();
+
+      if (!name || !code) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      const table = document.getElementById('instTable').getElementsByTagName('tbody')[0];
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${type}</td>
+        <td>${code}</td>
+        <td><button class="btn" onclick="removeRow(this)">Remove</button></td>
+      `;
+
+      document.getElementById('instForm').reset();
+    }
+
+    function removeRow(btn) {
+      const row = btn.closest("tr");
+      row.remove();
+    }
+  </script>
+</body>
+</html>

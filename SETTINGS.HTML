@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia Authenticity Validator - Settings</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #2d8bff, #5aa9ff);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.08);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(6px);
+    }
+    .logo {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    .nav-item {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #fff;
+      text-decoration: none;
+      display: block;
+    }
+    .nav-item.active, .nav-item:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .main {
+      flex: 1;
+      background: #f9fbff;
+      color: #222;
+      border-radius: 20px 0 0 20px;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-size: 14px;
+      color: #444;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccd5e0;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .btn {
+      background: #2d8bff;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #1d6fe0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Academia Validator</div>
+    <a href="dashboard.html" class="nav-item">Dashboard</a>
+    <a href="verify.html" class="nav-item">Verify Certificate</a>
+    <a href="institutions.html" class="nav-item">Institutions</a>
+    <a href="reports.html" class="nav-item">Reports</a>
+    <a href="settings.html" class="nav-item active">Settings</a>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <h1>⚙ Settings</h1>
+
+    <!-- Profile Settings -->
+    <div class="card">
+      <h2>Profile Settings</h2>
+      <label for="adminName">Admin Name</label>
+      <input type="text" id="adminName" value="John Doe">
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" value="admin@jharkhand.edu">
+
+      <label for="password">Change Password</label>
+      <input type="password" id="password" placeholder="Enter new password">
+
+      <button class="btn" onclick="saveProfile()">Save Profile</button>
+    </div>
+
+    <!-- System Settings -->
+    <div class="card">
+      <h2>System Preferences</h2>
+      <label for="lang">Language</label>
+      <select id="lang">
+        <option>English</option>
+        <option>Hindi</option>
+        <option>Bengali</option>
+      </select>
+
+      <label for="theme">Theme</label>
+      <select id="theme">
+        <option>Light</option>
+        <option selected>Blue Gradient</option>
+        <option>Dark</option>
+      </select>
+
+      <button class="btn" onclick="saveSystem()">Save Preferences</button>
+    </div>
+
+    <!-- Notifications -->
+    <div class="card">
+      <h2>Notifications</h2>
+      <label><input type="checkbox" checked> Email Alerts</label>
+      <label><input type="checkbox"> SMS Alerts</label>
+      <label><input type="checkbox" checked> Dashboard Alerts</label>
+
+      <button class="btn" onclick="saveNotif()">Save Notifications</button>
+    </div>
+  </div>
+
+  <script>
+    function saveProfile() {
+      alert("Profile settings saved!");
+    }
+    function saveSystem() {
+      alert("System preferences saved!");
+    }
+    function saveNotif() {
+      alert("Notification settings saved!");
+    }
+  </script>
+</body>
+</html>

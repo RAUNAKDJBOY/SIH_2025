@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students - Academia Authenticity Validator</title>
+  <style>
+    body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;min-height:100vh}
+    .container{max-width:1200px;margin:0 auto;padding:30px}
+    .card{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);padding:30px;border-radius:20px;margin-bottom:30px;border:1px solid rgba(255,255,255,0.2)}
+    h1,h2{margin-bottom:20px}
+    p{opacity:.9;line-height:1.6}
+    ul{list-style:none;padding:0}
+    li{margin:10px 0;background:rgba(255,255,255,0.08);padding:15px;border-radius:10px}
+    table{width:100%;border-collapse:collapse;margin-top:15px}
+    th,td{padding:12px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.2)}
+    th{background:rgba(255,255,255,0.15)}
+    tr:hover{background:rgba(255,255,255,0.05)}
+    a{color:#ffd700;text-decoration:none;font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="card">
+      <h1>Student Dashboard</h1>
+      <p>Welcome! Here you can view your uploaded certificates and check your past verifications.</p>
+      <p><a href="index.html">← Back to Main Dashboard</a></p>
+    </div>
+
+    <!-- All Certificates -->
+    <div class="card">
+      <h2>My Certificates</h2>
+      <ul id="certificateList">
+        <li>Bachelor of Technology - Computer Science (2023)</li>
+        <li>Master of Arts - English Literature (2022)</li>
+      </ul>
+    </div>
+
+    <!-- Verification History -->
+    <div class="card">
+      <h2>Previous Verifications</h2>
+      <table>
+        <thead>
+          <tr><th>Certificate</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>B.Tech - Computer Science</td>
+            <td>✅ Authentic</td>
+            <td>2023-08-14 10:32 AM</td>
+          </tr>
+          <tr>
+            <td>M.A - English Literature</td>
+            <td>⚠ Requires Review</td>
+            <td>2022-11-02 04:20 PM</td>
+          </tr>
+          <tr>
+            <td>Diploma - Data Science</td>
+            <td>❌ Fake</td>
+            <td>2021-09-21 01:15 PM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</body>
+</html>

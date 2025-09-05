@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia Authenticity Validator - Dashboard</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;color:#333}
+    .container{max-width:1400px;margin:0 auto;padding:20px}
+
+    /* Header */
+    .header{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;padding:20px 30px;margin-bottom:30px;border:1px solid rgba(255,255,255,0.2)}
+    .header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+    .logo{display:flex;align-items:center;gap:15px;color:white}
+    .logo-icon{width:50px;height:50px;background:linear-gradient(45deg,#ff6b6b,#ffa726);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px}
+    .logo h1{font-size:24px;font-weight:700}
+    .user-info{display:flex;align-items:center;gap:15px;color:white}
+    .notification-badge{position:relative;background:rgba(255,255,255,0.2);padding:10px;border-radius:50%;cursor:pointer;transition:all .3s ease}
+    .notification-badge:hover{background:rgba(255,255,255,0.3);transform:scale(1.1)}
+    .badge-count{position:absolute;top:-5px;right:-5px;background:#ff4757;color:white;border-radius:50%;width:20px;height:20px;font-size:12px;display:flex;align-items:center;justify-content:center}
+
+    /* Navigation */
+    .nav-tabs{display:flex;gap:10px;background:rgba(255,255,255,0.1);padding:5px;border-radius:15px;flex-wrap:wrap}
+    .nav-tab{padding:12px 24px;border:none;background:transparent;color:rgba(255,255,255,0.7);border-radius:10px;cursor:pointer;transition:all .3s ease;font-weight:500;text-decoration:none;display:inline-block}
+    .nav-tab.active{background:rgba(255,255,255,0.9);color:#333;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+    .nav-tab:hover:not(.active){background:rgba(255,255,255,0.2);color:white}
+
+    /* Dashboard Content */
+    .dashboard-content{display:grid;grid-template-columns:1fr 1fr 1fr;gap:25px;margin-bottom:30px}
+    .stat-card{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;padding:30px;border:1px solid rgba(255,255,255,0.2);transition:all .3s ease;cursor:pointer}
+    .stat-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+    .stat-card h3{color:rgba(255,255,255,0.8);font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+    .stat-number{font-size:36px;font-weight:700;color:white;margin-bottom:10px}
+    .stat-change{font-size:14px;display:flex;align-items:center;gap:5px}
+    .stat-change.positive{color:#2ecc71}
+    .stat-change.negative{color:#e74c3c}
+
+    /* Main Content Area */
+    .main-content{display:grid;grid-template-columns:2fr 1fr;gap:25px}
+    .content-card{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;padding:30px;border:1px solid rgba(255,255,255,0.2);color:white}
+    .content-card h2{margin-bottom:25px;color:white;font-size:22px}
+
+    /* Upload Section */
+    .upload-area{border:2px dashed rgba(255,255,255,0.3);border-radius:15px;padding:40px;text-align:center;transition:all .3s ease;cursor:pointer;margin-bottom:25px}
+    .upload-area:hover{border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.05)}
+    .upload-icon{font-size:48px;margin-bottom:15px;opacity:.7}
+    .upload-text{font-size:16px;margin-bottom:10px}
+    .upload-subtext{font-size:14px;opacity:.7}
+
+    /* Buttons */
+    .btn{padding:12px 24px;border:none;border-radius:10px;cursor:pointer;font-weight:600;transition:all .3s ease;text-decoration:none;display:inline-block;text-align:center}
+    .btn-primary{background:linear-gradient(45deg,#667eea,#764ba2);color:white}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,0.4)}
+    .btn-success{background:linear-gradient(45deg,#2ecc71,#27ae60);color:white}
+    .btn-danger{background:linear-gradient(45deg,#e74c3c,#c0392b);color:white}
+
+    /* Activity */
+    .activity-item{padding:15px;border-radius:10px;background:rgba(255,255,255,0.05);margin-bottom:15px;display:flex;align-items:center;gap:15px}
+    .activity-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+    .activity-icon.success{background:linear-gradient(45deg,#2ecc71,#27ae60)}
+    .activity-icon.warning{background:linear-gradient(45deg,#f39c12,#e67e22)}
+    .activity-icon.danger{background:linear-gradient(45deg,#e74c3c,#c0392b)}
+
+    /* Responsive */
+    @media(max-width:1200px){.dashboard-content{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){.dashboard-content{grid-template-columns:1fr}.main-content{grid-template-columns:1fr}.header-top{flex-direction:column;gap:15px}}
+
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .animate-in{animation:fadeInUp .6s ease forwards}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header animate-in">
+      <div class="header-top">
+        <div class="logo">
+          <div class="logo-icon">🎓</div>
+          <div>
+            <h1>Academia Authenticity Validator</h1>
+            <p style="font-size:14px;opacity:.8;">Jharkhand Higher Education Department</p>
+          </div>
+        </div>
+        <div class="user-info">
+          <div class="notification-badge">🔔<span class="badge-count">3</span></div>
+          <div>
+            <div style="font-weight:600;">Admin Dashboard</div>
+            <div style="font-size:12px;opacity:.7;">Last login: Today, 9:45 AM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
+        <button class="nav-tab" onclick="showTab('verify')">Verify Certificate</button>
+         <a class="nav-tab" href="students.html">Students</a>
+        
+        <a class="nav-tab" href="institutions.html">Institutions</a>
+        <a class="nav-tab" href="about.html">About Us</a>
+        <a class="nav-tab" href="settings.html">Settings</a>
+       
+      </nav>
+    </div>
+
+    <!-- Dashboard Stats -->
+    <div class="dashboard-content animate-in" id="dashboard-tab">
+      <div class="stat-card"><h3>Total Verifications</h3><div class="stat-number">12,847</div><div class="stat-change positive">↗ +8.2% from last month</div></div>
+      <div class="stat-card"><h3>Authentic Certificates</h3><div class="stat-number">11,203</div><div class="stat-change positive">↗ 87.2% success rate</div></div>
+      <div class="stat-card"><h3>Flagged as Fake</h3><div class="stat-number">1,644</div><div class="stat-change negative">↗ 12.8% detection rate</div></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Verification Section -->
+      <div class="content-card animate-in" id="verify-section">
+        <h2>Certificate Verification</h2>
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+          <div class="upload-icon">📄</div>
+          <div class="upload-text">Click to upload certificate</div>
+          <div class="upload-subtext">Supports PDF, JPG, PNG files up to 10MB</div>
+          <input type="file" id="fileInput" style="display:none" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileUpload(this)">
+        </div>
+        <div style="display:flex;gap:15px;margin-bottom:25px;">
+          <button class="btn btn-primary" onclick="startVerification()">Start Verification</button>
+          <button class="btn btn-success" onclick="bulkUpload()">Bulk Upload</button>
+        </div>
+        <div id="verificationResults"></div>
+      </div>
+
+      <!-- Activity Panel -->
+      <div class="content-card animate-in">
+        <h2>Recent Activity</h2>
+        <div class="activity-item"><div class="activity-icon success">✓</div><div><div class="activity-title">Certificate Verified</div><div class="activity-time">2 minutes ago</div></div></div>
+        <div class="activity-item"><div class="activity-icon warning">⚠</div><div><div class="activity-title">Suspicious Document Flagged</div><div class="activity-time">15 minutes ago</div></div></div>
+        <div class="activity-item"><div class="activity-icon danger">✗</div><div><div class="activity-title">Fake Certificate Detected</div><div class="activity-time">1 hour ago</div></div></div>
+        <h2 style="margin:25px 0 15px 0;">Quick Actions</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-primary">Manage Institutions</button>
+          <button class="btn btn-success">Generate Report</button>
+          <a href="settings.html" class="btn" style="background:rgba(255,255,255,0.1);color:white;">System Settings</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(tabName){
+      document.querySelectorAll('.nav-tab').forEach(tab=>tab.classList.remove('active'));
+      event.target.classList.add('active');
+      if(tabName==='verify'){document.getElementById('verify-section').scrollIntoView({behavior:'smooth'})}
+    }
+    function handleFileUpload(input){
+      if(input.files&&input.files[0]){
+        const file=input.files[0];
+        const uploadArea=document.querySelector('.upload-area');
+        uploadArea.innerHTML=`<div class="upload-icon">📄</div>
+        <div class="upload-text">File Selected: ${file.name}</div>
+        <div class="upload-subtext">Size: ${(file.size/1024/1024).toFixed(2)} MB</div>`;
+        uploadArea.style.background='rgba(46,204,113,0.1)';
+        uploadArea.style.borderColor='#2ecc71';
+      }
+    }
+    function startVerification(){
+      alert("Simulating certificate verification...");
+    }
+    function bulkUpload(){alert("Bulk upload coming soon...");}
+  </script>
+</body>
+</html>
